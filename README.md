@@ -1,4 +1,4 @@
-## Pomodoro Count
+## Thinking
 
 Temas:
  - Programação dinâmica
