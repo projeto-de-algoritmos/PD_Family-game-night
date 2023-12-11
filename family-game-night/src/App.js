@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import './App.css';
 
 function knapsackDP(time, games) {
+  if (time <= 0 || games.length === 0) {
+    return [];
+  }
+
   const n = games.length;
   const dp = Array.from({ length: n + 1 }, () => Array(time + 1).fill(0));
 
   for (let i = 1; i <= n; i++) {
     for (let j = 1; j <= time; j++) {
-      if (j >= games[i - 1].time) {
-        dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - games[i - 1].time] + games[i - 1].weight);
+      if (games[i - 1].time <= j) {
+        dp[i][j] = Math.max(dp[i - 1][j], games[i - 1].weight + dp[i - 1][j - games[i - 1].time]);
       } else {
         dp[i][j] = dp[i - 1][j];
       }
@@ -24,21 +28,31 @@ function knapsackDP(time, games) {
       selectedGames.push(games[i - 1]);
       j -= games[i - 1].time;
     }
-    i--;
+    i -= 1;
   }
 
-  return selectedGames.reverse();
+  return selectedGames;
 }
 
-function GameList({ games }) {
+function GameList({ games, title }) {
   return (
-    <div id="gameList" className="scroll-container">
-      <h2>Jogos Adicionados:</h2>
+    <div className="game-list">
+      <h2>{title}</h2>
       {games.map((game, index) => (
         <div key={index} className="game-item">
-          <span className="game-name">{game.name}</span>
-          <span className="game-time">{game.time} min</span>
-          <span className="game-weight">{game.weight} prio</span>
+          <span className="game-details">
+            <span className="game-name" style={{ marginRight: '8px', fontSize: '1em' }}>
+              {game.name}
+            </span>
+            <span className="game-time" style={{ color: 'orange', fontSize: '1em' }}>
+              ({game.time} min)
+            </span>
+            {game.weight && (
+              <span className="game-weight" style={{ color: 'orange', fontSize: '1em', marginLeft: '8px' }}>
+                Prio: {game.weight}
+              </span>
+            )}
+          </span>
         </div>
       ))}
     </div>
@@ -51,18 +65,18 @@ function App() {
   const [newGameTime, setNewGameTime] = useState(60);
   const [newGameWeight, setNewGameWeight] = useState(1);
   const [availableTime, setAvailableTime] = useState(120);
-  const [selectedGames, setSelectedGames] = useState([]);
 
   const addGame = () => {
     if (newGame.trim() !== '') {
       const newGameObj = { name: newGame, time: newGameTime, weight: newGameWeight };
       setGames([...games, newGameObj]);
-      setSelectedGames(knapsackDP(availableTime, [...games, newGameObj]));
       setNewGame('');
       setNewGameTime(60);
       setNewGameWeight(1);
     }
   };
+
+  const selectedGames = knapsackDP(availableTime, games);
 
   return (
     <div className="App">
@@ -70,6 +84,14 @@ function App() {
         <h1 className="app-title">Jogos para uma Noite de Jogos em Família</h1>
 
         <div className="form-container">
+          <label htmlFor="availableTime">Tempo Disponível (minutos):</label>
+          <input
+            type="number"
+            id="availableTime"
+            value={availableTime}
+            onChange={(e) => setAvailableTime(parseInt(e.target.value, 10))}
+          />
+          
           <input
             type="text"
             placeholder="Novo Jogo"
@@ -91,20 +113,12 @@ function App() {
           <button onClick={addGame}>Adicionar</button>
         </div>
 
-        <GameList games={games} />
-
-        <div className="form-container">
-          <label htmlFor="availableTime">Tempo Disponível (minutos):</label>
-          <input
-            type="number"
-            id="availableTime"
-            value={availableTime}
-            onChange={(e) => setAvailableTime(parseInt(e.target.value, 10))}
-          />
-          <button onClick={() => setSelectedGames(knapsackDP(availableTime, games))}>Calcular Jogos</button>
+        <div className="columns-container">
+          <GameList games={games} title="Jogos na Lista" />
+          {availableTime > 0 && (
+            <GameList games={selectedGames} title="Jogos Selecionados" />
+          )}
         </div>
-
-        <GameList games={selectedGames} />
       </header>
     </div>
   );
