@@ -1,4 +1,4 @@
-## Thinking
+## Family-game-night
 
 Temas:
  - Programação dinâmica
@@ -12,7 +12,10 @@ Temas:
 
 ## Sobre 
 
-Pensando enquanto implementamos o algoritmo
+Bem-vindo ao "Family-game-night", sua solução interativa para transformar uma simples noite em família em uma experiência única e memorável! Este projeto inovador combina a emoção de escolher jogos de tabuleiro com a eficácia do algoritmo da Mochila para criar uma noite perfeita de diversão para todos.
+
+Porque acreditamos que cada noite em família merece ser única e cheia de alegria. Com "Family-game-night", não é apenas sobre jogar, mas criar memórias especiais que durarão por gerações. Prepare-se para uma noite mágica cheia de diversão, risos e conexão familiar!
+
 ## Screenshots
 
 
@@ -56,3 +59,4 @@ Pensando enquanto implementamos o algoritmo
 
 ## Apresentação
 [Link Apresentação]()
+
