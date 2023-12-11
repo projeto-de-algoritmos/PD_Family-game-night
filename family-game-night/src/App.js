@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function knapsackDP(time, games) {
-  if (time <= 0 || games.length === 0) {
+  if (isNaN(time) || time <= 0 || games.length === 0) {
     return [];
   }
 
@@ -31,7 +31,7 @@ function knapsackDP(time, games) {
     i -= 1;
   }
 
-  return selectedGames;
+  return selectedGames.reverse(); // Reverse the array to maintain the original order
 }
 
 function GameList({ games, title }) {
@@ -66,6 +66,13 @@ function App() {
   const [newGameWeight, setNewGameWeight] = useState(1);
   const [availableTime, setAvailableTime] = useState(120);
 
+  useEffect(() => {
+    // Atualiza os jogos selecionados quando o tempo disponível é alterado
+    const selectedGames = knapsackDP(availableTime, games);
+    // Faça o que for necessário com os jogos selecionados, por exemplo, exibição no console.
+    console.log('Jogos Selecionados:', selectedGames);
+  }, [availableTime, games]);
+
   const addGame = () => {
     if (newGame.trim() !== '') {
       const newGameObj = { name: newGame, time: newGameTime, weight: newGameWeight };
@@ -75,8 +82,6 @@ function App() {
       setNewGameWeight(1);
     }
   };
-
-  const selectedGames = knapsackDP(availableTime, games);
 
   return (
     <div className="App">
@@ -116,7 +121,7 @@ function App() {
         <div className="columns-container">
           <GameList games={games} title="Jogos na Lista" />
           {availableTime > 0 && (
-            <GameList games={selectedGames} title="Jogos Selecionados" />
+            <GameList games={knapsackDP(availableTime, games)} title="Jogos Selecionados" />
           )}
         </div>
       </header>
