@@ -49,7 +49,7 @@ function GameList({ games, title }) {
             </span>
             {game.weight && (
               <span className="game-weight" style={{ color: 'orange', fontSize: '1em', marginLeft: '8px' }}>
-                Prio: {game.weight}
+                Prio: {convertToStars(game.weight)}
               </span>
             )}
           </span>
@@ -58,13 +58,18 @@ function GameList({ games, title }) {
     </div>
   );
 }
-
+const convertToStars = (numStars) => {
+  const nonNegativeStars = Math.max(0, numStars);
+  const clampedStars = Math.min(5, nonNegativeStars); // Limita a quantidade máxima de estrelas a 5
+  return '★'.repeat(clampedStars) + '☆'.repeat(5 - clampedStars);
+};
 function App() {
   const [games, setGames] = useState([]);
   const [newGame, setNewGame] = useState('');
   const [newGameTime, setNewGameTime] = useState(60);
-  const [newGameWeight, setNewGameWeight] = useState(1);
+  const [newGameWeight, setNewGameWeight] = useState('★★☆☆☆');
   const [availableTime, setAvailableTime] = useState(120);
+
 
   useEffect(() => {
     // Atualiza os jogos selecionados quando o tempo disponível é alterado
@@ -73,13 +78,14 @@ function App() {
     console.log('Jogos Selecionados:', selectedGames);
   }, [availableTime, games]);
 
+
   const addGame = () => {
     if (newGame.trim() !== '') {
       const newGameObj = { name: newGame, time: newGameTime, weight: newGameWeight };
       setGames([...games, newGameObj]);
       setNewGame('');
       setNewGameTime(60);
-      setNewGameWeight(1);
+      setNewGameWeight('★★☆☆☆'); // Definir padrão como 2 estrelas
     }
   };
 
