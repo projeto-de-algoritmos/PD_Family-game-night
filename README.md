@@ -32,6 +32,10 @@ Porque acreditamos que cada noite em família merece ser única e cheia de alegr
 
 **Linguagem**: JavaScript (React)<br>
 **Bundler/Package Manager**: npm<br>
+## Instalação
+
+**Linguagem**: JavaScript (React)<br>
+**Bundler/Package Manager**: npm<br>
 
 **Dependências**
  
