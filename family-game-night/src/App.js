@@ -84,7 +84,7 @@ function App() {
       setGames([...games, newGameObj]);
       setNewGame('');
       setNewGameTime(60);
-      setNewGameWeight(2); // Defina o padrão como 2
+      setNewGameWeight(2);
     }
   };
 
