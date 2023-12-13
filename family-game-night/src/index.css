@@ -1,80 +1,90 @@
 body {
-  font-family: 'Serif', sans-serif;
-  background-color: #f0f0f0;
+  font-family: 'Arial', sans-serif;
+  background-color: #2b2b2b;
+  color: #fff;
   margin: 0;
-  padding: 0;
-}
-
-.App {
-  text-align: center;
-  padding: 20px;
 }
 
 .App-header {
-  background-color: #fff;
+  background-color: #1c1c1c;
+  color: #fff;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .app-title {
-  color: #fff;
-  font-size: 24px;
-  margin-bottom: 20px;
+  margin: 0;
+  font-size: 28px;
 }
 
 .form-container {
   margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  background-color: #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-input {
-  padding: 10px;
-  margin-right: 10px;
-}
-
-button {
-  padding: 10px 15px;
-  background-color: #4caf50;
+form button {
+  background-color: #007bff;
   color: #fff;
+  padding: 12px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
 }
 
-button:hover {
-  background-color: #45a049;
+form button:hover {
+  background-color: #454b52;
+}
+
+form input {
+  margin: 10px;
+  padding: 12px;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  color: #333;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+form input:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.columns-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin: 20px;
+}
+
+.game-list {
+  width: 45%;
+  padding: 20px;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  background-color: #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .game-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  margin-top: 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.scroll-container {
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.game-name {
-  color: #e74c3c;
-  font-size: 18px;
-}
-
-button {
-  background-color: #e74c3c;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
   cursor: pointer;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  background-color: #2b2b2b;
+  color: #bd1515; 
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease-in-out;
 }
 
-button:hover {
-  background-color: #c0392b;
+
+
+.game-item:hover {
+  background-color: #a81717;
 }

@@ -31,10 +31,10 @@ function knapsackDP(time, games) {
     i -= 1;
   }
 
-  return selectedGames.reverse(); // Reverse the array to maintain the original order
+  return selectedGames.reverse();
 }
 
-function GameList({ games, title }) {
+function GameList({ games, title, onRemoveGame }) {
   return (
     <div className="game-list">
       <h2>{title}</h2>
@@ -52,29 +52,32 @@ function GameList({ games, title }) {
                 Prio: {convertToStars(game.weight)}
               </span>
             )}
+            <button onClick={() => onRemoveGame(index)}>Remover</button>
           </span>
         </div>
       ))}
     </div>
   );
 }
+
+
 const convertToStars = (numStars) => {
   const nonNegativeStars = Math.max(0, numStars);
-  const clampedStars = Math.min(5, nonNegativeStars); // Limita a quantidade máxima de estrelas a 5
+  const clampedStars = Math.min(5, nonNegativeStars);
   return '★'.repeat(clampedStars) + '☆'.repeat(5 - clampedStars);
 };
+
 function App() {
   const [games, setGames] = useState([]);
   const [newGame, setNewGame] = useState('');
   const [newGameTime, setNewGameTime] = useState(60);
+  const [newGameWeight, setNewGameWeight] = useState(2);
   const [newGameWeight, setNewGameWeight] = useState('★★☆☆☆');
-  const [availableTime, setAvailableTime] = useState(120);
+
 
 
   useEffect(() => {
-    // Atualiza os jogos selecionados quando o tempo disponível é alterado
     const selectedGames = knapsackDP(availableTime, games);
-    // Faça o que for necessário com os jogos selecionados, por exemplo, exibição no console.
     console.log('Jogos Selecionados:', selectedGames);
   }, [availableTime, games]);
 
@@ -85,8 +88,14 @@ function App() {
       setGames([...games, newGameObj]);
       setNewGame('');
       setNewGameTime(60);
-      setNewGameWeight('★★☆☆☆'); // Definir padrão como 2 estrelas
+      setNewGameWeight(2); 
+
     }
+  };
+
+  const removeGame = (indexToRemove) => {
+    const updatedGames = games.filter((_, index) => index !== indexToRemove);
+    setGames(updatedGames);
   };
 
   return (
@@ -125,9 +134,9 @@ function App() {
         </div>
 
         <div className="columns-container">
-          <GameList games={games} title="Jogos na Lista" />
+          <GameList games={games} title="Jogos na Lista" onRemoveGame={removeGame} />
           {availableTime > 0 && (
-            <GameList games={knapsackDP(availableTime, games)} title="Jogos Selecionados" />
+            <GameList games={knapsackDP(availableTime, games)} title="Jogos Selecionados" onRemoveGame={removeGame} />
           )}
         </div>
       </header>
