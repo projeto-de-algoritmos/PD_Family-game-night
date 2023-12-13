@@ -60,6 +60,7 @@ function GameList({ games, title, onRemoveGame }) {
   );
 }
 
+
 const convertToStars = (numStars) => {
   const nonNegativeStars = Math.max(0, numStars);
   const clampedStars = Math.min(5, nonNegativeStars);
@@ -71,12 +72,15 @@ function App() {
   const [newGame, setNewGame] = useState('');
   const [newGameTime, setNewGameTime] = useState(60);
   const [newGameWeight, setNewGameWeight] = useState(2);
-  const [availableTime, setAvailableTime] = useState(120);
+  const [newGameWeight, setNewGameWeight] = useState('★★☆☆☆');
+
+
 
   useEffect(() => {
     const selectedGames = knapsackDP(availableTime, games);
     console.log('Jogos Selecionados:', selectedGames);
   }, [availableTime, games]);
+
 
   const addGame = () => {
     if (newGame.trim() !== '') {
@@ -84,7 +88,8 @@ function App() {
       setGames([...games, newGameObj]);
       setNewGame('');
       setNewGameTime(60);
-      setNewGameWeight(2); // Defina o padrão como 2
+      setNewGameWeight(2); 
+
     }
   };
 
